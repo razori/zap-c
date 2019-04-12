@@ -1,0 +1,213 @@
+<!<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+
+     <style>
+      nav{
+        background: #666;
+      }
+      nav ul, .time{
+        list-style-type: none;
+        padding:0;
+      }
+      nav a,.time{
+        font-size: 1.2em;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+        text-align: center;
+        color: #fff;
+        display: block;
+        padding: 10px;
+      }
+      nav a:hover{
+        background: #999;
+      }
+      nav ul{
+        display: flex;
+      }
+      nav li, .time{
+        flex: 1 1 0;
+      }
+      .time{
+        font-size: 0.9em;
+      }
+      body{
+        background: #ededed;
+      }
+      .new_task{
+        background: #888;
+      }
+      label{
+        color: #fff;
+        padding: 10px;
+      }
+      input{
+        padding: 10px;
+        width: 80%;
+        margin-right: auto;
+      }
+      input[type=text], input[type=time], input[type=tel], input[type=number], select{
+        padding: 10px 25px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid cyan;
+        border-radius: 4px;
+        height: 30px;
+        vertical-align: middle;
+        color: red;
+      }
+      textarea{
+        width: 100%;
+        height: 80px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        resize: none;
+      }
+      .logo{
+        background: #4c90ff;
+      }
+      .logo:hover{
+        background: #376bbf;
+      }
+      .errorlist{
+        color: #f00;
+        font-size: 0.7em;
+        font-family: monospace;
+        font-weight: bold;
+        background: #522;
+      }
+      .helptext{
+        display: none;
+      }
+      td,th {
+        border: 1px solid rgb(190, 190, 190);
+        padding: 10px;
+            }
+
+      td {
+        text-align: center;
+          }
+
+      tr:nth-child(even) {
+          background-color: #eee;
+      }
+
+      th[scope="col"] {
+          background-color: #696969;
+          color: #fff;
+      }
+
+      th[scope="row"] {
+          background-color: #d7d9f2;
+      }
+
+      caption {
+          padding: 10px;
+          caption-side: bottom;
+      }
+
+      table {
+          border-collapse: collapse;
+          border: 2px solid rgb(200, 200, 200);
+          letter-spacing: 1px;
+          font-family: sans-serif;
+          font-size: .8rem;
+          width: 100%;
+
+            }
+      select {
+        width: 100%;
+        padding: 16px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #848484;
+        color: black;
+      }
+      input[type=submit]{
+        background-color: #4c90ff;
+        border: none;
+        color: white;
+        padding: 16px 32px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        width: 100%;
+        }
+        input[type=reset]{
+          background-color: #ff2222;
+          border: none;
+          color: white;
+          padding: 16px 32px;
+          text-decoration: none;
+          margin: 4px 2px;
+          cursor: pointer;
+          width: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container menu">
+      <nav>
+        <ul>
+          <li class="logo"><a class="logo" href="#">Zapravkom</a></li>
+          <li><a href="#">Войти</a></li>
+          <li><a href="/logistic/denis/">Денис</a></li>
+          <li><a href="/logistic/vlad/">Владислав</a></li>
+          <li><a href="#">Поиск</a></li>
+          <li><code class="time">Сегодня {{ date|date:"d M Y" }}</code></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="new_task">
+      <form method='POST'>
+        {% csrf_token %}
+      {{ new_task.as_p }}
+      <input type="submit" value="Сохранить">
+      <input type="reset"  value="Очистить">
+      </form>
+    </div>
+    <div class="task_list">
+      <table>
+      <caption>Список задач на сегодня ( {{ date|date:"d M Y" }} )</caption>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Адрес\описание</th>
+        <th scope="col">Работает с:</th>
+        <th scope="col">Работает до:</th>
+        <th scope="col">Телефон</th>
+        <th scope="col">Контактное лицо</th>
+        <th scope="col">Оплата</th>
+        <th scope="col">Сумма</th>
+        <th scope="col">О\З</th>
+        <th scope="col">Ответственный</th>
+        <th scope="col">Подменка</th>
+      </tr>
+      {% for task in task_list %}
+                <tr>
+                <td class="id">{{ task.id }}</td>
+                <td class="process">{{ task.process }}</td>
+                <td class="description">{{ task.description }}</td>
+                <td class="working_time">{{ task.working_time_1 }}</td>
+                <td class="working_time">{{ task.working_time_2 }}</td>
+                <td class="phone">{{ task.phone }}</td>
+                <td class="contact_name">{{ task.contact_name }}</td>
+                <td class="payment_method">{{ task.payment_method }}</td>
+                <td class="cashsumm">{{ task.cashsumm }}</td>
+                <td class="get_set">{{ task.get_set }}</td>
+                <td class="employee">{{ task.employee }}</td>
+                <td class="replace">{{ task.replace }}</td>
+              </tr>
+            {% endfor %}
+            </table>
+
+    </div>
+  </body>
+</html>
