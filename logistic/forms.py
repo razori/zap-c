@@ -1,10 +1,10 @@
 from django import forms
-from .models import DayTasks, Client
+from .models import Task, Client, Printer, Cartridge, Employee
 from django.forms import ModelForm, Select, Textarea, TextInput, NumberInput, RadioSelect
 
-class DayTasksForm(ModelForm):
+class TaskForm(ModelForm):
 	class Meta:
-		model = DayTasks
+		model = Task
 		fields = ['process', 'description', 'working_time_1', 'working_time_2',
 		 		  'cashsumm', 'get_set', 'employee',
 				  'replace', 'payment_method']
@@ -24,3 +24,18 @@ class ClientForm(ModelForm):
 	class Meta:
 		model = Client
 		fields = [ 'name', 'phone', 'adress', 'organisation', 'commentary']
+
+class PrinterForm(ModelForm):
+	class Meta:
+		model = Printer
+		fields = ['name', 'compatibility']
+
+class CartridgeForm(ModelForm):
+	class Meta:
+		model = Cartridge
+		fields = ['code_name', 'simple_name', 'resourse', 'part', 'color']
+
+class EmployeeForm(ModelForm):
+	class Meta:
+		model = Employee
+		fields = ['firstname', 'middlename', 'lastname', 'phone', 'function']
